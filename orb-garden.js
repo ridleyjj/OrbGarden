@@ -65,7 +65,7 @@ function getRandomNote() {
 }
 
 function setup() {
-    createCanvas(1600, 800);
+    createCanvas(window.innerWidth, window.innerHeight - 200);
 }
 
 function draw() {
