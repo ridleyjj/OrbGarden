@@ -4,6 +4,7 @@ class Orb {
     pallete;
     looper;
     maxRadius = 150;
+    growthSpeed = 5;
 
     constructor(x_, y_) {
         this.r = 10;
@@ -25,24 +26,17 @@ class Orb {
     };
 
     display = function () {
-        fill(
-            this.pallette.primary.r,
-            this.pallette.primary.g,
-            this.pallette.primary.b
-        );
-        stroke(
-            this.pallette.secondary.r,
-            this.pallette.secondary.g,
-            this.pallette.secondary.b,
-            80 - this.distance * 80
-        );
+        fill(this.pallette.primary.p5Color());
+        const strokeCol = this.pallette.secondary.p5Color();
+        strokeCol.setAlpha(80 - this.distance * 80);
+        stroke(strokeCol);
         strokeWeight(this.r - this.distance * this.r);
         ellipse(this.x, this.y, this.r, this.r);
     };
 
     increaseRadius = function () {
         if (this.r < this.maxRadius) {
-            this.r += 5;
+            this.r += this.growthSpeed;
         }
         return this.r < this.maxRadius;
     };

@@ -8,6 +8,10 @@ class Colour {
         this.g = green;
         this.b = blue;
     }
+
+    p5Color() {
+        return color(this.r, this.g, this.b);
+    }
 }
 
 class Pallette {
