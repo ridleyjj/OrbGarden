@@ -3,21 +3,24 @@ class Orb {
     r = 0;
     pallete;
     looper;
+    maxRadius = 150;
 
     constructor(x_, y_) {
-        this.r = Math.floor(10 + 140 * Math.random());
+        this.r = 10;
         this.x = x_;
         this.y = y_;
-        this.pallette = COLOURS[floor(COLOURS.length * Math.random())];
+
+        let randomIndex = floor(COLOURS.length * Math.random());
+        this.pallette = COLOURS[randomIndex];
         this.looper = new Looper();
     }
 
     update = function () {
         this.distance = Math.abs(mouseX - this.x) + Math.abs(mouseY - this.y);
-        this.distance = map(this.distance, 0, 300, 0, 1);
+        this.distance = map(this.distance, 0, this.r * 4, 0, 1);
         this.distance = constrain(this.distance, 0, 1);
         this.looper.setVolume(
-            constrain(map(this.distance, 0.3, 1, 0, -40), -40, 0)
+            constrain(map(this.distance, 0.3, 1, 0, -70), -70, 0)
         );
     };
 
@@ -35,5 +38,12 @@ class Orb {
         );
         strokeWeight(this.r - this.distance * this.r);
         ellipse(this.x, this.y, this.r, this.r);
+    };
+
+    increaseRadius = function () {
+        if (this.r < this.maxRadius) {
+            this.r += 5;
+        }
+        return this.r < this.maxRadius;
     };
 }

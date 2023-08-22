@@ -41,8 +41,9 @@ const player2 = new Tone.Player({
 
 started = false;
 
-NOTES = ["C", "E", "G", "B"];
+NOTES = ["C", "E", "F", "G", "A", "B"];
 orbs = new Array();
+newOrb = false;
 
 document.addEventListener("click", () => {
     if (!started) {
@@ -58,9 +59,7 @@ function initAudio() {
 }
 
 function getRandomNote() {
-    note = `${NOTES[Math.floor(4 * Math.random())]}${
-        Math.floor(Math.random() * 4) + 2
-    }`;
+    note = `${NOTES[Math.floor(4 * Math.random())]}4`;
     return note;
 }
 
@@ -74,14 +73,26 @@ function draw() {
         orb.update();
         orb.display();
     });
+    if (mouseIsPressed && newOrb) {
+        orbs.at(-1).increaseRadius();
+    }
 }
 
 function mousePressed() {
     if (!isMouseOverCanvas()) {
+        overCanvas = false;
         return;
     }
-    orbTriggerSound();
+    overCanvas = true;
     orbs.push(new Orb(mouseX, mouseY));
+    newOrb = true;
+}
+
+function mouseReleased() {
+    if (newOrb) {
+        orbTriggerSound();
+        newOrb = false;
+    }
 }
 
 function orbTriggerSound() {
